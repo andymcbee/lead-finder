@@ -1,0 +1,50 @@
+.top {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  font-family: "Josefin Sans", sans-serif;
+  background-color: white;
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.topLeft,
+.topRight {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topLeftTitle {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.topCenter {
+  flex: 6;
+}
+
+.topImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.topList {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topListItem {
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: 300;
+  cursor: pointer;
+}
