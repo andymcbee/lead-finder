@@ -1,10 +1,16 @@
 import dotenv from "dotenv";
 import axios from "axios";
+import Contact from "../models/contact.js";
 
 dotenv.config();
 
 export const addContact = async (req, res) => {
-  let { domain: rawDomain, fName: rawFName, lName: rawLName } = req.body;
+  let {
+    domain: rawDomain,
+    fName: rawFName,
+    lName: rawLName,
+    companyName: rawCompanyName,
+  } = req.body;
 
   //global variables for never bounce API calls.
   // No spaces, no special characters, all low case
@@ -12,10 +18,35 @@ export const addContact = async (req, res) => {
   let apiFriendlyDomain;
   let apiFriendlyFirstName;
   let apiFriendlyLastName;
+  let savedContact;
 
   let foundEmail = false;
 
   //function: Make text email address friendly (Remove special characters, low case, spaces)
+
+  //Save information in MongoDB when submitted.
+
+  const newContact = new Contact({
+    firstName: rawFName,
+    lastName: rawLName,
+    website: rawDomain,
+    companyName: rawCompanyName,
+  }); // mody this so its better... dont pass entire body
+
+  try {
+    savedContact = await newContact.save();
+    console.log(savedContact.id);
+
+    /*     await Contact.findByIdAndUpdate(savedContact._id, {
+      companyName: "TEST COMPANY NAME",
+    }); */
+
+    // res.status(200).json(savedPost); //I think I don't need to return anything?..
+  } catch (err) {
+    // res.status(500).json(err);
+    //**How do I handle multiple error handling? */
+    console.log(err);
+  }
 
   const emailFriendlyText = (text) => {
     let formattedText = text.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
@@ -50,14 +81,22 @@ export const addContact = async (req, res) => {
 
         validValue = data.result;
 
-        res.status(201).json(data);
+        // res.status(201).json(data);
       } catch (error) {
-        res.status(409).json(error);
+        //  res.status(409).json(error);
+        console.log(error);
       }
     }
 
-    if (validValue) {
+    if (validValue === "valid") {
+      console.log(
+        "VALID VALUE TRIGGERED################################################3"
+      );
       foundEmail = true;
+      await Contact.findByIdAndUpdate(savedContact._id, {
+        email: email,
+      });
+      res.status(201).json({ message: "Got email!" });
     }
   };
 
@@ -136,6 +175,7 @@ export const addContact = async (req, res) => {
     apiFriendlyLastName,
     apiFriendlyDomain
   );
+
   /* 
   !foundEmail &&
     checkVariantFNameLastName(
@@ -156,11 +196,7 @@ export const addContact = async (req, res) => {
       apiFriendlyDomain
     );  */
 
-  /*   await verifyEmail(email2);
-  !foundEmail &&
-    console.log(
-      "THIS SHOULD FIRE AFTER RESPONSE AND ONLY IF FOUND EMAIL IS FALSE"
-    ); */
-  //create an individual function for every single "type" that then also triggers the veryfiy email....
-  //thenh I can simply do a chain of "if else" perhaps?
+  // return response to front end if no result found.
+
+  !foundEmail && res.status(201).json({ message: "No email found :(" });
 };
