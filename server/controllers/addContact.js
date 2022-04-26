@@ -5,6 +5,7 @@ import Contact from "../models/contact.js";
 dotenv.config();
 
 export const addContact = async (req, res) => {
+  console.log(req.body);
   let {
     domain: rawDomain,
     fName: rawFName,
@@ -56,9 +57,14 @@ export const addContact = async (req, res) => {
 
   //FUNCTION: extract domain, make it low case
   const extractFriendlyDomain = (rawDomain) => {
+    console.log("RAW DOMAIN::::");
+    console.log(rawDomain);
     const url = rawDomain.toLowerCase();
-    const { hostname } = new URL(url);
+    console.log("NEW URL::::");
+    console.log(url);
 
+    const { hostname } = new URL(url);
+    console.log("GOT HERE");
     if (hostname.includes("www")) {
       apiFriendlyDomain = hostname.replace("www.", "");
     } else {
@@ -93,10 +99,15 @@ export const addContact = async (req, res) => {
         "VALID VALUE TRIGGERED################################################3"
       );
       foundEmail = true;
-      await Contact.findByIdAndUpdate(savedContact._id, {
-        email: email,
-      });
-      res.status(201).json({ message: "Got email!" });
+      savedContact = await Contact.findByIdAndUpdate(
+        savedContact._id,
+        {
+          email: email,
+        },
+        { new: true }
+      );
+      await console.log(savedContact);
+      res.status(201).json({ newContact: savedContact });
     }
   };
 
@@ -198,5 +209,6 @@ export const addContact = async (req, res) => {
 
   // return response to front end if no result found.
 
-  !foundEmail && res.status(201).json({ message: "No email found :(" });
+  !foundEmail && res.status(201).json({ newContact: savedContact });
+  console.log(savedContact);
 };

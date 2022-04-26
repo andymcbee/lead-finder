@@ -1,17 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./formNewContact.css";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state/index";
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+
+  const state = useSelector((state) => state);
+  const test = useSelector((state) => state.test);
+  const account = useSelector((state) => state.account);
+
+  const { depositMoney, createContact } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
   const [formData, setFormData] = useState({
     fName: "",
     lName: "",
     companyName: "",
-    website: "",
+    domain: "",
   });
   console.log(formData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // depositMoney(5);
+    //    console.log(formData);
+    createContact(formData);
   };
 
   /*   const handleChange = (e) => {
@@ -56,7 +78,7 @@ export default function SignUp() {
             placeholder="Website"
             value={formData.website}
             onChange={(e) =>
-              setFormData({ ...formData, website: e.target.value })
+              setFormData({ ...formData, domain: e.target.value })
             }
           />
         </label>

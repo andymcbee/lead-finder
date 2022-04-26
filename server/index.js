@@ -14,7 +14,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-app.use("/api/contact", addContact);
+app.use("/api/contacts", addContact);
 
 mongoose
   .connect(process.env.MONGO_URL, {
