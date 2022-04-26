@@ -1,0 +1,9 @@
+.ContactsDataTableWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.ContactsDataTable {
+  max-width: 50vw;
+}
