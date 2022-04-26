@@ -7,6 +7,8 @@ const reducer = (state = { isLoading: false, contacts: [] }, action) => {
 
     case "CREATE":
       return { ...state, contacts: [...state.contacts, action.payload] };
+    case "FETCH":
+      return { ...state, contacts: action.payload };
 
     default:
       return state;

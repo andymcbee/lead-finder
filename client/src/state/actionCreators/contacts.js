@@ -24,11 +24,12 @@ export const createContact = (newContact) => async (dispatch) => {
   }
 };
 
-export const depositMoney = (amount) => {
-  return (dispatch) => {
-    dispatch({
-      type: "deposit",
-      payload: amount,
-    });
-  };
+export const getContacts = () => async (dispatch) => {
+  try {
+    const { data } = await api.getContacts();
+    console.log(data);
+    dispatch({ type: "FETCH", payload: data.data });
+  } catch (error) {
+    console.log(error);
+  }
 };

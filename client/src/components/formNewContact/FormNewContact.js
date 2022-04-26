@@ -11,10 +11,7 @@ export default function SignUp() {
   const test = useSelector((state) => state.test);
   const account = useSelector((state) => state.account);
 
-  const { depositMoney, createContact } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { createContact } = bindActionCreators(actionCreators, dispatch);
 
   useEffect(() => {
     console.log(state);

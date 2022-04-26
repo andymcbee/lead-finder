@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-import addContact from "./routes/addContact.js";
+import contactsRoute from "./routes/contactsRoute.js";
 
 const app = express();
 dotenv.config();
@@ -14,7 +14,7 @@ app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 
-app.use("/api/contacts", addContact);
+app.use("/api/contacts", contactsRoute);
 
 mongoose
   .connect(process.env.MONGO_URL, {

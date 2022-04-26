@@ -18,6 +18,8 @@ import { TableHead } from "@mui/material";
 import { Button } from "@mui/material";
 import "./contactsDataTable.css";
 import { useSelector } from "react-redux";
+import { CSVLink, CSVDownload } from "react-csv";
+import DownloadIcon from "@mui/icons-material/Download";
 
 export default function CustomPaginationActionsTable() {
   const state = useSelector((state) => state);
@@ -25,6 +27,20 @@ export default function CustomPaginationActionsTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState(state.contacts.contacts);
+  const [csvData, setCsvData] = React.useState([]);
+
+  /* const csvData = [
+    ["firstname", "lastname", "email"],
+    ["Ahmed", "Tomi", "ah@smthing.co.com"],
+    ["Raed", "Labes", "rl@smthing.co.com"],
+    ["Yezzi", "Min l3b", "ymin@cocococo.com"],
+  ]; */
+
+  useEffect(() => {
+    console.log(state);
+    setRows(state.contacts.contacts);
+    setCsvData(state.contacts.contacts);
+  }, [state]);
 
   function TablePaginationActions(props) {
     const theme = useTheme();
@@ -32,34 +48,18 @@ export default function CustomPaginationActionsTable() {
 
     const handleFirstPageButtonClick = (event) => {
       onPageChange(event, 0);
-      console.log("FIRST PAGE BUTTON CLICKED FIRED");
-      testData();
     };
 
     const handleBackButtonClick = (event) => {
       onPageChange(event, page - 1);
-      console.log("BACK BUTTON CLICKED FIRED");
-      testData();
     };
 
     const handleNextButtonClick = (event) => {
       onPageChange(event, page + 1);
-      console.log("NEXT BUTTON CLICKED FIRED");
-      testData();
     };
 
     const handleLastPageButtonClick = (event) => {
       onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-      console.log("LAST PAGE BUTTON CLICKED FIRED");
-      testData();
-    };
-
-    const testData = () => {
-      console.log(count);
-      console.log(page);
-
-      console.log(rowsPerPage);
-      console.log(onPageChange);
     };
 
     return (
@@ -104,121 +104,6 @@ export default function CustomPaginationActionsTable() {
     );
   }
 
-  /*  const rows = [
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-    {
-      fName: "Fred",
-      lName: "Smith",
-      companyName: "Acme Marketing",
-      email: "fsmith@acme.com",
-      id: "123",
-    },
-  ]; */
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -236,7 +121,11 @@ export default function CustomPaginationActionsTable() {
     <div className="ContactsDataTableWrapper">
       <div className="ContactsDataTable">
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+          <Table
+            sx={{ minWidth: 500 }}
+            aria-label="custom pagination table"
+            exportButton={true}
+          >
             <TableHead>
               <TableRow>
                 <TableCell>First name</TableCell>
@@ -301,6 +190,11 @@ export default function CustomPaginationActionsTable() {
             </TableFooter>
           </Table>
         </TableContainer>
+      </div>
+      <div className="downloadCSVAllContacts">
+        <CSVLink data={csvData}>
+          <DownloadIcon />
+        </CSVLink>
       </div>
     </div>
   );

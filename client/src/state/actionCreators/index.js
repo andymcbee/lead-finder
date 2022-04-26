@@ -1,1 +1,1 @@
-export { depositMoney, createContact } from "./contacts";
+export { getContacts, createContact } from "./contacts";
