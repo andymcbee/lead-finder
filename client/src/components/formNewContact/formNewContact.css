@@ -1,0 +1,49 @@
+.addContact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.addContactTitle {
+  font-size: 50px;
+}
+
+.addContactForm {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.addContactForm > label {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.addContactInput {
+  padding: 10px;
+  background-color: white;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  font-size: 18px;
+}
+
+.addContactInput:focus {
+  outline: none;
+}
+
+.addContactButton {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: #ff5c35;
+  color: white;
+  padding: 10px;
+  border: none;
+  text-align: center;
+}
+
+label,
+input {
+  display: block;
+}

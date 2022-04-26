@@ -1,99 +1,82 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import EmailIcon from "@mui/icons-material/Email";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const theme = createTheme();
+import React, { useState } from "react";
+import "./formNewContact.css";
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const [formData, setFormData] = useState({
+    fName: "",
+    lName: "",
+    companyName: "",
+    website: "",
+  });
+  console.log(formData);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
+  /*   const handleChange = (e) => {
+    console.log(e);
+    setFormData({ ...formData, fName: e.target.value });
+  }; */
+
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <EmailIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Add New Contact
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="domain"
-                  label="Website Address"
-                  name="domain"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="companyName"
-                  label="Company Name"
-                  name="companyName"
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Submit
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <div className="addContact">
+      <span className="addContactTitle">Add New Contact</span>
+      <form className="addContactForm" onSubmit={handleSubmit}>
+        <label>
+          First Name
+          <input
+            autoFocus
+            className="addContactInput"
+            type="text"
+            placeholder="First Name"
+            value={formData.fName}
+            onChange={(e) =>
+              setFormData({ ...formData, fName: e.target.value })
+            }
+          />
+        </label>
+        <label>
+          Last Name
+          <input
+            className="addContactInput"
+            type="text"
+            placeholder="Last Name"
+            value={formData.lName}
+            onChange={(e) =>
+              setFormData({ ...formData, lName: e.target.value })
+            }
+          />
+        </label>
+        <label>
+          Website
+          <input
+            className="addContactInput"
+            type="text"
+            placeholder="Website"
+            value={formData.website}
+            onChange={(e) =>
+              setFormData({ ...formData, website: e.target.value })
+            }
+          />
+        </label>
+        <label>
+          Company Name
+          <input
+            className="addContactInput"
+            type="text"
+            placeholder="Company Name"
+            value={formData.companyName}
+            onChange={(e) =>
+              setFormData({ ...formData, companyName: e.target.value })
+            }
+          />
+        </label>
+
+        <button className="addContactButton" type="submit">
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
