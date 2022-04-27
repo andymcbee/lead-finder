@@ -18,6 +18,9 @@ const ContactSchema = new mongoose.Schema(
     email: {
       type: String,
     },
+    accountId: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

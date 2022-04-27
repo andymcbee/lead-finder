@@ -7,6 +7,6 @@ import auth from "../middleware/auth.js";
 const router = express.Router();
 
 router.post("/", auth, addContact);
-router.get("/", auth, getContacts);
+router.get("/:accountId", auth, getContacts);
 
 export default router;

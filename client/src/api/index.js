@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
 
 export const createContact = (newContact) => API.post("/contacts", newContact);
 
-export const getContacts = () => API.get("/contacts");
+export const getContacts = (accountId) => API.get(`/contacts/${accountId}`);
 
 // sign up
 

@@ -24,9 +24,9 @@ export const createContact = (newContact) => async (dispatch) => {
   }
 };
 
-export const getContacts = () => async (dispatch) => {
+export const getContacts = (accountId) => async (dispatch) => {
   try {
-    const { data } = await api.getContacts();
+    const { data } = await api.getContacts(accountId);
     dispatch({ type: "FETCH", payload: data.data });
   } catch (error) {
     console.log(error);

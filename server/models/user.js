@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 
-//Potential bug... need to define email as unique.
-
 const userSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  accountId: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   id: String,
   createdAt: {

@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import dotenv from "dotenv";
+import { uid } from "uid";
 
 dotenv.config();
 
@@ -17,12 +18,33 @@ export const signup = async (req, res) => {
   if (password !== confirmPassword) {
     return res.status(400).json({ message: "Passwords do not match" });
   }
+
+  //generate unique Account ID for user
+  //Note for refactor down the road: The Account Id will be the same
+  // across all users of the same "team" or account.
+
+  const generateUniqueAccountId = async () => {
+    let randomNum = uid();
+
+    const existingAccountId = await User.findOne({
+      accountId: randomNum,
+    });
+    if (existingAccountId) {
+      generateUniqueAccountId();
+    } else {
+      return randomNum;
+    }
+  };
+
+  let accountUniqueId = await generateUniqueAccountId();
+
   //Hash password prior to storing
   const hashedPassword = await bcrypt.hash(password, 12);
   //Create a new user
   const newUser = await User.create({
     email,
     password: hashedPassword,
+    accountId: accountUniqueId,
   });
   //Create JWToken for user so we can sign them in after sign up
   const token = jwt.sign(

@@ -18,6 +18,7 @@ export default function SignUp() {
     lName: "",
     companyName: "",
     domain: "",
+    accountId: state.user.authData.result.accountId,
   });
 
   const handleSubmit = (e) => {

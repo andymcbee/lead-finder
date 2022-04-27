@@ -11,6 +11,7 @@ export const addContact = async (req, res) => {
     fName: rawFName,
     lName: rawLName,
     companyName: rawCompanyName,
+    accountId,
   } = req.body;
 
   //global variables for never bounce API calls.
@@ -32,11 +33,11 @@ export const addContact = async (req, res) => {
     lastName: rawLName,
     website: rawDomain,
     companyName: rawCompanyName,
-  }); // mody this so its better... dont pass entire body
+    accountId: accountId,
+  });
 
   try {
     savedContact = await newContact.save();
-    console.log(savedContact.id);
 
     /*     await Contact.findByIdAndUpdate(savedContact._id, {
       companyName: "TEST COMPANY NAME",
@@ -57,14 +58,9 @@ export const addContact = async (req, res) => {
 
   //FUNCTION: extract domain, make it low case
   const extractFriendlyDomain = (rawDomain) => {
-    console.log("RAW DOMAIN::::");
-    console.log(rawDomain);
     const url = rawDomain.toLowerCase();
-    console.log("NEW URL::::");
-    console.log(url);
 
     const { hostname } = new URL(url);
-    console.log("GOT HERE");
     if (hostname.includes("www")) {
       apiFriendlyDomain = hostname.replace("www.", "");
     } else {
