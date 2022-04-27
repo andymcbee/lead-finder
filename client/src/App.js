@@ -5,6 +5,8 @@ import { AllContactsPage } from "./views/allContactsPage/AllContactsPage";
 import { EditContactPage } from "./views/editContactPage/EditContactPage";
 import { SingleContactPage } from "./views/singleContactPage/SingleContactPage";
 import { TopBar } from "./components/topbar/TopBar";
+import UserSignup from "./views/userSignupPage/UserSignupPage";
+import UserSignin from "./views/userSigninPage/UserSigninPage";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
 
         <Route path="/contact/:contactId" element={<SingleContactPage />} />
         <Route path="/edit-contact/:contactId" element={<EditContactPage />} />
+        <Route path="/signup" element={<UserSignup />} />
+        <Route path="/login" element={<UserSignin />} />
       </Routes>
     </Router>
   );

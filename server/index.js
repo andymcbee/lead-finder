@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
 import contactsRoute from "./routes/contactsRoute.js";
+import userRoutes from "./routes/user.js";
 
 const app = express();
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 
 app.use("/api/contacts", contactsRoute);
+app.use("/api/user", userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL, {

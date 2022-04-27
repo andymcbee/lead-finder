@@ -32,8 +32,8 @@ export const TopBar = () => {
             </Link>
           </li>
           <li className="topListItem">
-            <Link className="link" to="/register">
-              Register
+            <Link className="link" to="/signup">
+              Signup
             </Link>
           </li>
         </ul>
