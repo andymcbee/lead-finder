@@ -28,7 +28,7 @@ export default function CustomPaginationActionsTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState(state.contacts.contacts);
   const [csvData, setCsvData] = React.useState([]);
-
+  console.log("Fire");
   /* const csvData = [
     ["firstname", "lastname", "email"],
     ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -121,11 +121,7 @@ export default function CustomPaginationActionsTable() {
     <div className="ContactsDataTableWrapper">
       <div className="ContactsDataTable">
         <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: 500 }}
-            aria-label="custom pagination table"
-            exportButton={true}
-          >
+          <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
                 <TableCell>First name</TableCell>

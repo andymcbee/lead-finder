@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HomePage } from "./views/homePage/HomePage";
 import { AllContactsPage } from "./views/allContactsPage/AllContactsPage";
@@ -7,18 +7,21 @@ import { SingleContactPage } from "./views/singleContactPage/SingleContactPage";
 import { TopBar } from "./components/topbar/TopBar";
 import UserSignup from "./views/userSignupPage/UserSignupPage";
 import UserSignin from "./views/userSigninPage/UserSigninPage";
+import { useSelector } from "react-redux";
 
 function App() {
-  const user = JSON.parse(localStorage.getItem("profile"));
-  console.log(user);
+  const user = useSelector((state) => state.user?.authData?.result);
 
   return (
     <Router>
       <TopBar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={user ? <HomePage /> : <UserSignup />} />
 
-        <Route path="/contacts" element={<AllContactsPage />} />
+        <Route
+          path="/contacts"
+          element={user ? <AllContactsPage /> : <UserSignup />}
+        />
 
         <Route
           path="/contact/:contactId"
@@ -39,5 +42,3 @@ function App() {
 }
 
 export default App;
-
-//        <Route path="/signup" element={<UserSignup />} />

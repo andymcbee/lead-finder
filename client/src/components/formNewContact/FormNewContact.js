@@ -13,17 +13,12 @@ export default function SignUp() {
 
   const { createContact } = bindActionCreators(actionCreators, dispatch);
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
-
   const [formData, setFormData] = useState({
     fName: "",
     lName: "",
     companyName: "",
     domain: "",
   });
-  console.log(formData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
