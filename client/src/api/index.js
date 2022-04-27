@@ -9,3 +9,5 @@ export const getContacts = () => API.get("/contacts");
 // sign up
 
 export const signup = (formData) => API.post("/user/signup", formData);
+
+export const signin = (formData) => API.post("/user/signin", formData);

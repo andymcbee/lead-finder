@@ -21,7 +21,7 @@ export default function UserSignin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //const { signin } = bindActionCreators(actionCreators, dispatch);
+  const { signin } = bindActionCreators(actionCreators, dispatch);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +34,7 @@ export default function UserSignin() {
     let formData = { email, password };
     console.log(formData);
 
-    //   signin(formData, navigate);
+    signin(formData, navigate);
   };
 
   return (
@@ -53,7 +53,7 @@ export default function UserSignin() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign in
           </Typography>
           <Box
             component="form"

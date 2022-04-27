@@ -1,2 +1,2 @@
 export { getContacts, createContact } from "./contacts";
-export { signup } from "./auth";
+export { signup, signin } from "./auth";
