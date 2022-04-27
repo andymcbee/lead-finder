@@ -16,6 +16,16 @@ export const TopBar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+      //check and see if exp value (in milliseconds) is less than 1000. If so, log out.
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        logout(navigate);
+        setUser(null);
+      }
+    }
     console.log("UF Ran - TOP BAR");
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [navigate]);

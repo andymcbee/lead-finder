@@ -18,10 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
 
-        <Route
-          path="/contacts"
-          element={user ? <AllContactsPage /> : <UserSignup />}
-        />
+        <Route path="/contacts" element={<AllContactsPage />} />
 
         <Route
           path="/contact/:contactId"
