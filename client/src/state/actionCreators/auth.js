@@ -21,3 +21,12 @@ export const signin = (formData, navigate) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const logout = (navigate) => async (dispatch) => {
+  try {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+  } catch (error) {
+    console.log(error);
+  }
+};
