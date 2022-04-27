@@ -16,18 +16,14 @@ export const TopBar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = user?.token;
-
-    if (token) {
-      const decodedToken = decode(token);
-      //check and see if exp value (in milliseconds) is less than 1000. If so, log out.
-      if (decodedToken.exp * 1000 < new Date().getTime()) {
-        logout(navigate);
-      }
-    }
-
+    console.log("UF Ran - TOP BAR");
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [navigate, user, logout]);
+  }, [navigate]);
+
+  const handleLogout = () => {
+    logout(navigate);
+    setUser(null);
+  };
 
   return (
     <div className="top">
@@ -36,37 +32,44 @@ export const TopBar = () => {
           Lead Finder App
         </Link>
       </div>
-      <div className="topCenter">
-        <ul className="topList">
-          <li className="topListItem">
-            <Link className="link" to="/">
-              Home
-            </Link>
-          </li>
-          <li className="topListItem">
-            <Link className="link" to="/contacts">
-              Contacts
-            </Link>
-          </li>
-        </ul>
-      </div>
+      {user?.result && (
+        <div className="topCenter">
+          <ul className="topList">
+            <li className="topListItem">
+              <Link className="link" to="/">
+                Home
+              </Link>
+            </li>
+            <li className="topListItem">
+              <Link className="link" to="/contacts">
+                Contacts
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
       <div className="topRight">
         <ul className="topList">
-          <li className="topListItem">
-            <Link className="link" to="/login">
-              Login
-            </Link>
-          </li>
-          <li className="topListItem">
-            <Link className="link" to="/signup">
-              Signup
-            </Link>
-          </li>
-          <li className="topListItem">
-            <div className="link" onClick={() => logout(navigate)}>
-              Logout
-            </div>
-          </li>
+          {user?.result ? (
+            <li className="topListItem">
+              <div className="link" onClick={() => handleLogout()}>
+                Logout
+              </div>
+            </li>
+          ) : (
+            <>
+              <li className="topListItem">
+                <Link className="link" to="/login">
+                  Login
+                </Link>
+              </li>
+              <li className="topListItem">
+                <Link className="link" to="/signup">
+                  Signup
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
