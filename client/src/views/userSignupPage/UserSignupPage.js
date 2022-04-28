@@ -26,17 +26,21 @@ export default function UserSignup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = (event) => {
+    if (password !== confirmPassword) {
+      setError(true);
+    }
     event.preventDefault();
-    console.log(email);
-    console.log(password);
 
-    console.log(confirmPassword);
     let formData = { email, password, confirmPassword };
-    console.log(formData);
 
-    signup(formData, navigate);
+    if (password === confirmPassword) {
+      signup(formData, navigate);
+
+      setError(false);
+    }
   };
 
   return (
@@ -57,17 +61,13 @@ export default function UserSignup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
+                  type="email"
                   id="email"
                   label="Email Address"
                   name="email"
@@ -85,6 +85,7 @@ export default function UserSignup() {
                   id="password"
                   autoComplete="new-password"
                   onChange={(e) => setPassword(e.target.value)}
+                  error={error}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -96,6 +97,8 @@ export default function UserSignup() {
                   type="password"
                   id="confirmPassword"
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  error={error}
+                  helperText={error ? "Passwords don't match" : " "}
                 />
               </Grid>
             </Grid>
