@@ -12,28 +12,29 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function UserSignin() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const { signin } = bindActionCreators(actionCreators, dispatch);
+  const { userId, jwt } = useParams();
 
-  const [email, setEmail] = useState("");
+  console.log(userId);
+  console.log(jwt);
+
+  const { setNewPassword } = bindActionCreators(actionCreators, dispatch);
+
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email);
-    console.log(password);
 
-    let formData = { email, password };
-    console.log(formData);
-
-    signin(formData, navigate);
+    let data = { password, confirmPassword, userId, jwt };
+    //be sure to pass the user ID of the current page through ... and also the JWT? Or just the JWT?
+    setNewPassword(data);
   };
 
   return (
@@ -52,7 +53,7 @@ export default function UserSignin() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Set New Password
           </Typography>
           <Box component="form" validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -60,24 +61,22 @@ export default function UserSignin() {
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="password"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
+                  id="confirmPassword"
+                  label="Confrm Password"
+                  name="confirmPassword"
                   type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -87,13 +86,8 @@ export default function UserSignin() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Login
+              Set New Password
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link to="/reset-password">Forgot password?</Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

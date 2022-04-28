@@ -7,6 +7,9 @@ import { SingleContactPage } from "./views/singleContactPage/SingleContactPage";
 import { TopBar } from "./components/topbar/TopBar";
 import UserSignup from "./views/userSignupPage/UserSignupPage";
 import UserSignin from "./views/userSigninPage/UserSigninPage";
+import ForgotPassword from "./views/userForgotPasswordPage/UserForgotPasswordPage";
+import SetNewPassword from "./views/userSetNewPasswordPage/UserSetNewPasswordPage";
+
 import { useSelector } from "react-redux";
 
 function App() {
@@ -36,6 +39,12 @@ function App() {
         <Route path="/signup" element={user ? <HomePage /> : <UserSignup />} />
 
         <Route path="/login" element={user ? <HomePage /> : <UserSignin />} />
+
+        <Route path="/reset-password" element={<ForgotPassword />} />
+        <Route
+          path="/reset-password/:userId/:jwt"
+          element={<SetNewPassword />}
+        />
       </Routes>
     </Router>
   );

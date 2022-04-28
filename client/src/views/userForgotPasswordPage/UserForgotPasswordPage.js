@@ -12,28 +12,24 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function UserSignin() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const { signin } = bindActionCreators(actionCreators, dispatch);
+  const { resetPassword } = bindActionCreators(actionCreators, dispatch);
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(email);
-    console.log(password);
+    console.log("SUBMIT FIRED");
 
-    let formData = { email, password };
-    console.log(formData);
+    let formData = { email };
 
-    signin(formData, navigate);
+    resetPassword(formData);
   };
 
   return (
@@ -52,7 +48,7 @@ export default function UserSignin() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Reset Password
           </Typography>
           <Box component="form" validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -68,18 +64,6 @@ export default function UserSignin() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -87,11 +71,11 @@ export default function UserSignin() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Login
+              Send Reset Link
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/reset-password">Forgot password?</Link>
+                <Link to="/login">Back to login</Link>
               </Grid>
             </Grid>
           </Box>

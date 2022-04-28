@@ -34,3 +34,29 @@ export const logout = (navigate) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const resetPassword = (formData) => async (dispatch) => {
+  try {
+    await api.resetPassword(formData);
+
+    await dispatch({ type: "RESETPASSWORD" });
+
+    alert("Check your email for a password reset link");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const setNewPassword = (data) => async (dispatch) => {
+  try {
+    const user = await api.setNewPassword(data);
+
+    await dispatch({ type: "SETNEWPASSWORD" });
+
+    console.log(user);
+
+    //   alert("Check your email for a password reset link");
+  } catch (error) {
+    console.log(error);
+  }
+};

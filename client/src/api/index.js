@@ -15,8 +15,13 @@ export const createContact = (newContact) => API.post("/contacts", newContact);
 
 export const getContacts = (accountId) => API.get(`/contacts/${accountId}`);
 
-// sign up
+// user auth
 
 export const signup = (formData) => API.post("/user/signup", formData);
 
 export const signin = (formData) => API.post("/user/signin", formData);
+
+export const resetPassword = (formData) =>
+  API.post("/user/reset-password", formData);
+
+export const setNewPassword = (data) => API.post("/user/set-password", data);
