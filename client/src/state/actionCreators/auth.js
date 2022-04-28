@@ -8,17 +8,21 @@ export const signup = (formData, navigate) => async (dispatch) => {
     navigate("/");
   } catch (error) {
     console.log(error);
+    alert(error.response.data.message);
   }
 };
 
 export const signin = (formData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signin(formData);
+    //  alert("Hello");
+    // console.log(data.response.response.data);
 
     dispatch({ type: "AUTH", data });
     navigate("/");
   } catch (error) {
     console.log(error);
+    alert(error.response.data.message);
   }
 };
 
