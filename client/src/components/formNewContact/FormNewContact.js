@@ -23,6 +23,7 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("HANDLE SUBMIT FIRED");
 
     // depositMoney(5);
     //    console.log(formData);
@@ -43,6 +44,7 @@ export default function SignUp() {
           <input
             autoFocus
             className="addContactInput"
+            required={true}
             type="text"
             placeholder="First Name"
             value={formData.fName}
@@ -67,7 +69,8 @@ export default function SignUp() {
           Website
           <input
             className="addContactInput"
-            type="text"
+            type="url"
+            required={true}
             placeholder="Website"
             value={formData.website}
             onChange={(e) =>
