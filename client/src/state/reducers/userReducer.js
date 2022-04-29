@@ -1,4 +1,10 @@
-const authReducer = (state = { authData: null }, action) => {
+const authReducer = (
+  state = {
+    authData: null,
+    message: { showMessage: false, text: null, notifType: null },
+  },
+  action
+) => {
   switch (action.type) {
     case "AUTH":
       localStorage.setItem("profile", JSON.stringify({ ...action?.data }));
@@ -10,6 +16,16 @@ const authReducer = (state = { authData: null }, action) => {
       return { ...state };
     case "SETNEWPASSWORD":
       return { ...state };
+    case "NOTIFICATION":
+      return {
+        ...state,
+        message: {
+          showMessage: action.showMessage,
+          text: action.text,
+          subtext: action.subtext,
+          notifType: action.notifType,
+        },
+      };
 
     default:
       return state;
@@ -17,3 +33,6 @@ const authReducer = (state = { authData: null }, action) => {
 };
 
 export default authReducer;
+
+//showSuccess: action.showSuccess,
+//message: action.message,

@@ -4,7 +4,7 @@ import User from "../models/user.js";
 import dotenv from "dotenv";
 import { uid } from "uid";
 import mongoose from "mongoose";
-
+import mailgun from "mailgun-js";
 dotenv.config();
 
 export const signup = async (req, res) => {
@@ -115,9 +115,26 @@ export const resetPassword = async (req, res) => {
 
       const link = `http://localhost:3000/reset-password/${existingUser._id}/${token}`;
       console.log(link);
+
+      let html = `<html><body>Hey, here's that link I weas talking about: <a href="${link}">here</a></body></html>`;
+
+      const message = `<html>Here is your password reset link: <a href="${link}">Reset Password</a></html>`;
+      const DOMAIN = process.env.MGDOMAIN1;
+      const mg = mailgun({ apiKey: process.env.MGAPIKEY, domain: DOMAIN });
+      const data = {
+        from: "test@test.com",
+        to: "armcburn@gmail.com",
+        subject: "Password Reset",
+        html,
+      };
+      mg.messages().send(data, function (error, body) {
+        console.log("FIRED RIGHT BEFROE BACKEND RESPONSE");
+        res.status(200).json({ message: "Success" });
+      });
     }
   } catch (error) {
     console.log(error);
+    res.status(400).json({ message: "Error" });
   }
 };
 
@@ -166,22 +183,4 @@ export const setNewPassword = async (req, res) => {
     console.log(error);
     return res.status(400).json({ message: "There has been an error" });
   }
-
-  //I need to update user's PW now...
-
-  //console.log(decodedData.exp - decodedData.iat);
-
-  //current time in seconds
-  /* let timeNow = +new Date();
-
-  console.log(Math.round(timeNow / 1000));
-  console.log(decodedData.iat);
-
-  console.log(decodedData.exp); */
-
-  /*   if (decodedData.iat > decodedData.exp) {
-    return res.status(404).send("Expired link. Request a new link.");
-  } */
-
-  // req.userId = decodedData?.id;
 };

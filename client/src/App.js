@@ -11,13 +11,22 @@ import ForgotPassword from "./views/userForgotPasswordPage/UserForgotPasswordPag
 import SetNewPassword from "./views/userSetNewPasswordPage/UserSetNewPasswordPage";
 
 import { useSelector } from "react-redux";
+import { UiNotifications } from "./components/notifications/uiNotifications/UiNotifications";
 
 function App() {
   const user = useSelector((state) => state.user?.authData?.result);
+  const UiMessages = useSelector((state) => state.user?.message);
 
+  useEffect(() => {
+    console.log("APP LOADED");
+    console.log(UiMessages);
+  }, [UiMessages]);
+  //UiMessages.showMessage
   return (
     <Router>
       <TopBar />
+      {UiMessages.showMessage && <UiNotifications data={UiMessages} />}
+
       <Routes>
         <Route path="/" element={user ? <HomePage /> : <UserSignup />} />
 

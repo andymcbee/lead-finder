@@ -30,6 +30,7 @@ export default function UserSignin() {
     let formData = { email };
 
     resetPassword(formData);
+    console.log("Fired after reset PW trigger in view component)");
   };
 
   return (
@@ -53,7 +54,14 @@ export default function UserSignin() {
           <Box component="form" validate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <input
+                  required
+                  className="input"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {/* <TextField
                   required
                   fullWidth
                   id="email"
@@ -62,7 +70,7 @@ export default function UserSignin() {
                   type="email"
                   autoComplete="email"
                   onChange={(e) => setEmail(e.target.value)}
-                />
+                /> */}
               </Grid>
             </Grid>
             <Button

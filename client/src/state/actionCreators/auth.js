@@ -37,11 +37,32 @@ export const logout = (navigate) => async (dispatch) => {
 
 export const resetPassword = (formData) => async (dispatch) => {
   try {
-    await api.resetPassword(formData);
+    const resetAPICall = await api.resetPassword(formData);
+    console.log(resetAPICall);
 
     await dispatch({ type: "RESETPASSWORD" });
 
-    alert("Check your email for a password reset link");
+    //show success message
+    await dispatch({
+      type: "NOTIFICATION",
+      showMessage: true,
+      text: "Success!",
+      subtext: "Check your email for your reset link.",
+      notifType: "success",
+    });
+
+    //hide success message after
+
+    await setTimeout(() => {
+      dispatch({
+        type: "NOTIFICATION",
+        showMessage: false,
+        text: null,
+        subtext: null,
+
+        notifType: null,
+      });
+    }, "2000");
   } catch (error) {
     console.log(error);
   }
@@ -51,9 +72,13 @@ export const setNewPassword = (data) => async (dispatch) => {
   try {
     const user = await api.setNewPassword(data);
 
+    await console.log("Should fire after set password API call");
+
     await dispatch({ type: "SETNEWPASSWORD" });
 
-    console.log(user);
+    await console.log(
+      "Should fire immediately after set password is complete..."
+    );
 
     //   alert("Check your email for a password reset link");
   } catch (error) {
