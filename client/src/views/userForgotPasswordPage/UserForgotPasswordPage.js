@@ -23,13 +23,14 @@ export default function UserSignin() {
 
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("SUBMIT FIRED");
 
     let formData = { email };
 
-    resetPassword(formData);
+    await resetPassword(formData);
+    setEmail("");
     console.log("Fired after reset PW trigger in view component)");
   };
 
@@ -61,16 +62,6 @@ export default function UserSignin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {/* <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                /> */}
               </Grid>
             </Grid>
             <Button
