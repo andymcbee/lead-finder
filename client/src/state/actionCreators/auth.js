@@ -68,7 +68,7 @@ export const resetPassword = (formData) => async (dispatch) => {
   }
 };
 
-export const setNewPassword = (data) => async (dispatch) => {
+export const setNewPassword = (data, navigate) => async (dispatch) => {
   try {
     const user = await api.setNewPassword(data);
 
@@ -79,6 +79,29 @@ export const setNewPassword = (data) => async (dispatch) => {
     await console.log(
       "Should fire immediately after set password is complete..."
     );
+    //show success message
+    await dispatch({
+      type: "NOTIFICATION",
+      showMessage: true,
+      text: "Password reset!",
+      subtext: "Your password has been updated.",
+      notifType: "success",
+    });
+
+    //hide success message after
+
+    navigate("/login");
+
+    await setTimeout(() => {
+      dispatch({
+        type: "NOTIFICATION",
+        showMessage: false,
+        text: null,
+        subtext: null,
+
+        notifType: null,
+      });
+    }, "2000");
 
     //   alert("Check your email for a password reset link");
   } catch (error) {

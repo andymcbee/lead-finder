@@ -12,12 +12,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function UserSignin() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { userId, jwt } = useParams();
 
@@ -34,7 +35,7 @@ export default function UserSignin() {
 
     let data = { password, confirmPassword, userId, jwt };
     //be sure to pass the user ID of the current page through ... and also the JWT? Or just the JWT?
-    setNewPassword(data);
+    setNewPassword(data, navigate);
   };
 
   return (
