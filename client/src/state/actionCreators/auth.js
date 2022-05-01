@@ -3,8 +3,14 @@ import * as api from "../../api";
 export const signup = (formData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signup(formData);
+    console.log("DATA FROM BACKEND:::::");
+    console.log(data);
+    const { token } = data;
+    console.log(token);
 
-    dispatch({ type: "AUTH", data });
+    dispatch({ type: "AUTH", data: data.result });
+
+    localStorage.setItem("jwt", JSON.stringify({ token: token }));
     navigate("/");
   } catch (error) {
     console.log(error);
@@ -15,10 +21,16 @@ export const signup = (formData, navigate) => async (dispatch) => {
 export const signin = (formData, navigate) => async (dispatch) => {
   try {
     const { data } = await api.signin(formData);
-    //  alert("Hello");
-    // console.log(data.response.response.data);
+    console.log("SIGN IN USER ACTION CREATOR DATA:::");
 
-    dispatch({ type: "AUTH", data });
+    console.log(data);
+
+    const { token } = data;
+
+    await dispatch({ type: "AUTH", data: data.result });
+
+    localStorage.setItem("jwt", JSON.stringify({ token: token }));
+
     navigate("/");
   } catch (error) {
     console.log(error);
@@ -26,10 +38,27 @@ export const signin = (formData, navigate) => async (dispatch) => {
   }
 };
 
+export const getUser = () => async (dispatch) => {
+  try {
+    const { data } = await api.getUser();
+    console.log("GET USER ACTION CREATOR DATA:::");
+
+    console.log(data);
+
+    await dispatch({ type: "AUTH", data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const logout = (navigate) => async (dispatch) => {
   try {
-    dispatch({ type: "LOGOUT" });
+    console.log("LOGOUT:::: START");
+    localStorage.clear();
+
+    await dispatch({ type: "LOGOUT" });
     navigate("/login");
+    console.log("LOGOUT:::: END");
   } catch (error) {
     console.log(error);
   }

@@ -6,28 +6,34 @@ import { actionCreators } from "../../state/index";
 
 export default function SignUp() {
   const dispatch = useDispatch();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const state = useSelector((state) => state);
-  const test = useSelector((state) => state.test);
-  const account = useSelector((state) => state.account);
 
   const { createContact } = bindActionCreators(actionCreators, dispatch);
-
   const [formData, setFormData] = useState({
     fName: "",
     lName: "",
     companyName: "",
     domain: "",
-    accountId: state.user.authData.result.accountId,
+    accountId: user?.result?.accountId,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("HANDLE SUBMIT FIRED");
 
     // depositMoney(5);
     //    console.log(formData);
-    createContact(formData);
+    await createContact(formData);
+
+    setFormData({
+      fName: "",
+      lName: "",
+      companyName: "",
+      domain: "",
+      accountId: user?.result?.accountId,
+    });
   };
 
   /*   const handleChange = (e) => {
@@ -72,7 +78,7 @@ export default function SignUp() {
             type="url"
             required={true}
             placeholder="Website"
-            value={formData.website}
+            value={formData.domain}
             onChange={(e) =>
               setFormData({ ...formData, domain: e.target.value })
             }

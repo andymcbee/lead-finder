@@ -28,7 +28,7 @@ export default function CustomPaginationActionsTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState(state.contacts.contacts);
   const [csvData, setCsvData] = React.useState([]);
-  console.log("Fire");
+
   /* const csvData = [
     ["firstname", "lastname", "email"],
     ["Ahmed", "Tomi", "ah@smthing.co.com"],
@@ -37,9 +37,14 @@ export default function CustomPaginationActionsTable() {
   ]; */
 
   useEffect(() => {
-    console.log(state);
-    setRows(state.contacts.contacts);
-    setCsvData(state.contacts.contacts);
+    const fetchData = async () => {
+      await console.log("Test");
+      console.log("CONTACTS DATA TABLE FIRED");
+      setRows(state.contacts.contacts);
+      setCsvData(state.contacts.contacts);
+    };
+
+    fetchData();
   }, [state]);
 
   function TablePaginationActions(props) {

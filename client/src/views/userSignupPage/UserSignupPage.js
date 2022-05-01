@@ -28,7 +28,7 @@ export default function UserSignup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     if (password !== confirmPassword) {
       setError(true);
     }
@@ -37,7 +37,7 @@ export default function UserSignup() {
     let formData = { email, password, confirmPassword };
 
     if (password === confirmPassword) {
-      signup(formData, navigate);
+      const signupData = await signup(formData, navigate);
 
       setError(false);
     }

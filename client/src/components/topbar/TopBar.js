@@ -4,35 +4,56 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./topBar.css";
 import decode from "jwt-decode";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 
 export const TopBar = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem("jwt")));
   const dispatch = useDispatch();
-  const { logout } = bindActionCreators(actionCreators, dispatch);
+  const { logout, getUser } = bindActionCreators(actionCreators, dispatch);
+  const state = useSelector((state) => state);
+  const user = useSelector((state) => state.user?.authData);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = user?.token;
+  console.log(JSON.parse(localStorage.getItem("jwt")));
 
-    if (token) {
-      const decodedToken = decode(token);
+  useEffect(() => {
+    console.log("TOP BAR FIRED.");
+    console.log("Token::::");
+    console.log(token);
+
+    /*   if (token && !user) {
+      console.log("IF TOKEN FIRED");
+      getUser();
+    } */
+
+    if (token?.token) {
+      const currentToken = token?.token;
+      console.log(currentToken);
+
+      const decodedToken = decode(currentToken);
+      console.log(decodedToken);
+
       //check and see if exp value (in milliseconds) is less than 1000. If so, log out.
       if (decodedToken.exp * 1000 < new Date().getTime()) {
+        console.log("TOKEN EXPIRED FIRED");
         logout(navigate);
-        setUser(null);
+        localStorage.clear();
+        //user = false;
+      }
+
+      if (!user && token?.token) {
+        console.log("IF TOKEN FIRED");
+        console.log(token);
+        getUser();
       }
     }
-    console.log("UF Ran - TOP BAR");
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [navigate]);
+  }, [navigate, token, user]);
 
   const handleLogout = () => {
     logout(navigate);
-    setUser(null);
   };
 
   return (
@@ -42,7 +63,7 @@ export const TopBar = () => {
           Lead Finder App
         </Link>
       </div>
-      {user?.result && (
+      {user && (
         <div className="topCenter">
           <ul className="topList">
             <li className="topListItem">
@@ -60,7 +81,7 @@ export const TopBar = () => {
       )}
       <div className="topRight">
         <ul className="topList">
-          {user?.result ? (
+          {user ? (
             <li className="topListItem">
               <div className="link" onClick={() => handleLogout()}>
                 Logout

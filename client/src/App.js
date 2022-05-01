@@ -10,18 +10,30 @@ import UserSignin from "./views/userSigninPage/UserSigninPage";
 import ForgotPassword from "./views/userForgotPasswordPage/UserForgotPasswordPage";
 import SetNewPassword from "./views/userSetNewPasswordPage/UserSetNewPasswordPage";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "./state/index";
 import { UiNotifications } from "./components/notifications/uiNotifications/UiNotifications";
 
 function App() {
-  const user = useSelector((state) => state.user?.authData?.result);
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const UiMessages = useSelector((state) => state.user?.message);
+  const user = useSelector((state) => state.user?.authData);
+  //login:   const user = useSelector((state) => state.user?.authData?.data);
+
+  const state = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+
+  const { getContacts } = bindActionCreators(actionCreators, dispatch);
 
   useEffect(() => {
     console.log("APP LOADED");
-    console.log(UiMessages);
-  }, [UiMessages]);
-  //UiMessages.showMessage
+    // console.log(state.user.authData.result);
+    console.log(state);
+    console.log(user);
+  }, [state]);
+
   return (
     <Router>
       <TopBar />

@@ -8,7 +8,7 @@ export const AllContactsPage = () => {
   const dispatch = useDispatch();
   const { getContacts } = bindActionCreators(actionCreators, dispatch);
   const accountId = useSelector(
-    (state) => state.user.authData.result.accountId
+    (state) => state.user?.authData?.result?.accountId
   );
 
   console.log(accountId);

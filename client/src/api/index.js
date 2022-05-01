@@ -3,9 +3,9 @@ import axios from "axios";
 const API = axios.create({ baseURL: "http://localhost:5000/api" });
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem("profile")) {
+  if (localStorage.getItem("jwt")) {
     req.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("profile")).token
+      JSON.parse(localStorage.getItem("jwt")).token
     }`;
   }
   return req;
@@ -25,3 +25,5 @@ export const resetPassword = (formData) =>
   API.post("/user/reset-password", formData);
 
 export const setNewPassword = (data) => API.post("/user/set-password", data);
+
+export const getUser = () => API.get("/user");

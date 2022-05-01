@@ -77,7 +77,7 @@ export const signin = async (req, res) => {
     //logic if password is not correct
 
     if (!isPasswordCorrect)
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: "Invalid credentials." });
 
     //If user exists, and password is correct, get a JWT to send to front end
 
@@ -182,5 +182,31 @@ export const setNewPassword = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).json({ message: "There has been an error" });
+  }
+};
+
+export const getUser = async (req, res) => {
+  const { authorization } = req.headers;
+  //console.log(req.headers.authorization);
+
+  const token = authorization.split(" ")[1];
+  console.log("JWT::::");
+  console.log(token);
+
+  const decodedData = jwt.verify(token, process.env.JWTSECRET);
+
+  const { email, id: userId } = decodedData;
+
+  try {
+    const existingUser = await User.findOne({ email });
+
+    console.log(existingUser);
+
+    if (!existingUser)
+      return res.status(404).json({ message: "User does not exist" });
+
+    return res.status(200).json({ data: existingUser });
+  } catch (error) {
+    res.status(500).json({ message: "Error validating user." });
   }
 };
