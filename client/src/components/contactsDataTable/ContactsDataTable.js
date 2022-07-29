@@ -40,8 +40,8 @@ export default function CustomPaginationActionsTable() {
     const fetchData = async () => {
       await console.log("Test");
       console.log("CONTACTS DATA TABLE FIRED");
-      setRows(state.contacts.contacts);
-      setCsvData(state.contacts.contacts);
+      setRows(state.contacts?.contacts);
+      setCsvData(state.contacts?.contacts);
     };
 
     fetchData();

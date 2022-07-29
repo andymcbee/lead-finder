@@ -6,7 +6,7 @@ import { actionCreators } from "../../state/index";
 
 export default function SignUp() {
   const dispatch = useDispatch();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = useSelector((state) => state.user?.authData?.data);
 
   const state = useSelector((state) => state);
 
@@ -16,12 +16,14 @@ export default function SignUp() {
     lName: "",
     companyName: "",
     domain: "",
-    accountId: user?.result?.accountId,
+    accountId: user?.accountId,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("HANDLE SUBMIT FIRED");
+    console.log(user);
+    console.log(user?.accountId);
 
     // depositMoney(5);
     //    console.log(formData);
@@ -32,7 +34,7 @@ export default function SignUp() {
       lName: "",
       companyName: "",
       domain: "",
-      accountId: user?.result?.accountId,
+      accountId: user?.accountId,
     });
   };
 

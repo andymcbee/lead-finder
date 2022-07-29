@@ -8,14 +8,16 @@ export const AllContactsPage = () => {
   const dispatch = useDispatch();
   const { getContacts } = bindActionCreators(actionCreators, dispatch);
   const accountId = useSelector(
-    (state) => state.user?.authData?.result?.accountId
+    (state) => state.user?.authData?.data?.accountId
   );
 
   console.log(accountId);
 
   useEffect(() => {
     getContacts(accountId);
-  }, []);
+    console.log("ALL CONTACTS PAGE USE EFFECT DATA::::::::::");
+    console.log(accountId);
+  }, [accountId]);
 
   return (
     <div>

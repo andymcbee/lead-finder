@@ -6,8 +6,6 @@ dotenv.config();
 const auth = async (req, res, next) => {
   //  console.log(req.headers);
   try {
-    console.log("AUTH MIDDLEWARE:::::");
-    console.log(req.headers);
     const token = req.headers.authorization.split(" ")[1];
 
     let decodedData;

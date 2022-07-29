@@ -3,7 +3,10 @@ import Contact from "../models/contact.js";
 //Note: Add contact is in addContact.js due to its size.
 
 export const getContacts = async (req, res) => {
-  const accountId = req.params.accountId;
+  console.log("GET CONTACTS REQ:::");
+  const { accountId } = req.params;
+  console.log("ACCOUNT ID:::::::::");
+  console.log(accountId);
   try {
     const contacts = await Contact.find({ accountId: accountId });
     console.log("Contacts:::::::::::");

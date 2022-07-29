@@ -15,6 +15,16 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 import { useNavigate } from "react-router-dom";
 
+//Set the states that are pulled in:
+//email
+//password
+//confirm
+//error
+
+//Set the inputs?...
+
+//Set the function that6 happens onclick?...
+
 const theme = createTheme();
 
 export default function UserSignup() {
